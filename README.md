@@ -10,12 +10,14 @@ Navigate your player across the busy bug infested road without getting bitten
 
 Load the index.html file in your browser
 
-### Movement Controls
+### Player Movement Controls
 
 <code>Arrow Keys</code> - used to navigate your player
 
-### Game Controls
+### Game Reset
 
 <code>Enter Key</code> - used at any time to reset the game
 
-<code>BG Music Button</code> - turn on/off the annoying background music
+### Background Music
+
+<code>BG Music Button</code> - turn on/off the repetitive and annoying background music
