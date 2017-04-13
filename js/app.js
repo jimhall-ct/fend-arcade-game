@@ -28,7 +28,7 @@ var Enemy = function (row) {
 
 // Used to randomly set the enemy speed
 Enemy.prototype.randomSpeed = function () {
-    var minSpeed = 50;
+    var minSpeed = 75;
     var maxSpeed = 250;
     return Math.floor(Math.random() * (maxSpeed - minSpeed)) + minSpeed;
 };
@@ -77,21 +77,24 @@ Enemy.prototype.render = function () {
         // used to flip image along the x axis
         ctx.scale(-1, 1);
         ctx.drawImage(Resources.get(this.sprite), -this.x, this.y);
+        // Used outline to visually determine collisions
+        // this.drawHitBox(-this.x + this.hitBox.xOffset, this.y + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
 
         // Reset the transform to default after using the scale transform
         ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     } else {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        // Used outline to visually determine collisions
+        // this.drawHitBox(this.x + this.hitBox.xOffset, this.y + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
     }
 };
 
-// Helper function to visual check collisions
+// Helper function to visually check collisions
 // Parameters: x, y - x and y coordinates
 //             w, h - width and height of hitbox
-//             color - color of hitbox
-Enemy.prototype.drawHitBox = function (x, y, w, h, color) {
-    ctx.strokeStyle = color;
+Enemy.prototype.drawHitBox = function (x, y, w, h) {
+    ctx.strokeStyle = "red";
     ctx.strokeRect(x, y, w, h);
 };
 
@@ -345,7 +348,8 @@ var Scoreboard = function () {
         }
     };
 };
-
+// Game sound effects using the Howler.js audio framework
+// Use single audio sprite file using time offsets and durations
 var soundEffect = new Howl({
     src: ['./audio/audio_sprite_test.mp3'],
     sprite: {
