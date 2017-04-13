@@ -33,7 +33,7 @@ Enemy.prototype.randomSpeed = function () {
     return Math.floor(Math.random() * (maxSpeed - minSpeed)) + minSpeed;
 };
 
-// enemy 'y' coordinates of the three valid positions
+// enemy 'y' coordinates of the for valid row positions
 Enemy.prototype.boardPosition = {
     row: [56, 139, 222, 305]
 };
@@ -91,7 +91,7 @@ Enemy.prototype.render = function () {
 };
 
 // Helper function to visually check collisions
-// Parameters: xPos, yPos - x and y coordinates of enemy
+// Parameters: xPos, yPos - coordinates of enemy
 Enemy.prototype.drawHitBox = function (xPos, yPos) {
     ctx.strokeStyle = "red";
     ctx.strokeRect(xPos + this.hitBox.xOffset, yPos + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
@@ -124,6 +124,7 @@ var Player = function () {
     }
 };
 
+// Function to update the players position on the board
 Player.prototype.update = function (dt) {
     var speed = 750 * dt;
 
@@ -196,6 +197,7 @@ Player.prototype.boardPosition = {
     row: [-37, 46, 129, 212, 295, 378]
 };
 
+// Function for drawing the player on the board
 Player.prototype.render = function () {
     if (this.livesRemaining >= 0) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -222,11 +224,13 @@ Player.prototype.handleInput = function (keyPress) {
         this.direction = keyPress;
     }
 
+    // Enter was pressed to reset the game
     if (keyPress === 'restart') {
         document.location.reload();
     }
 };
 
+// Function that determines if the player has collided with an enemy
 Player.prototype.enemyCollisions = function () {
     allEnemies.forEach(function (enemy) {
 
@@ -243,6 +247,7 @@ Player.prototype.enemyCollisions = function () {
             this.x + this.hitBox.xOffset + this.hitBox.width + rightToLeftOffset > enemy.x + enemy.hitBox.xOffset &&
             this.y + this.hitBox.yOffset < enemy.y + enemy.hitBox.yOffset + enemy.hitBox.height &&
             this.y + this.hitBox.yOffset + this.hitBox.height > enemy.y + enemy.hitBox.yOffset) {
+            // Player collided with enemy
             soundEffect.play('hit');
             this.livesRemaining--;
             this.reset();
@@ -268,6 +273,7 @@ var Scoreboard = function () {
     this.messageOpacity = 1;
     this.gameOver = false;
 
+    // Function to store/retrieve high scores from local storage
     this.highScore = function (newHighScore) {
         if (newHighScore) {
             localStorage.highScore = newHighScore;
@@ -280,6 +286,7 @@ var Scoreboard = function () {
         }
     };
 
+    // Function that displays score, high score, and live remaining
     this.render = function (canvas) {
         ctx.font = "24px sans-serif";
 
@@ -308,6 +315,7 @@ var Scoreboard = function () {
         }
     };
 
+    // Function that displays 'SCORE' when you reach the top
     this.displayScored = function () {
         this.scored = true;
         this.messageSize += 2;
@@ -325,6 +333,7 @@ var Scoreboard = function () {
         }, 500);
     };
 
+    // Function that displays 'GAME OVER' and how to restart
     this.displayGameOver = function () {
         ctx.save();
         ctx.textAlign = "center";
@@ -337,6 +346,7 @@ var Scoreboard = function () {
         ctx.restore();
     };
 
+    // Function that updates high score if it is the new high score
     this.gameEnded = function () {
         this.gameOver = true;
 
