@@ -78,7 +78,7 @@ Enemy.prototype.render = function () {
         ctx.scale(-1, 1);
         ctx.drawImage(Resources.get(this.sprite), -this.x, this.y);
         // Used outline to visually determine collisions
-        // this.drawHitBox(-this.x + this.hitBox.xOffset, this.y + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
+        // this.drawHitBox(-this.x, this.y);
 
         // Reset the transform to default after using the scale transform
         ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -86,16 +86,15 @@ Enemy.prototype.render = function () {
     } else {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         // Used outline to visually determine collisions
-        // this.drawHitBox(this.x + this.hitBox.xOffset, this.y + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
+        // this.drawHitBox(this.x, this.y);
     }
 };
 
 // Helper function to visually check collisions
-// Parameters: x, y - x and y coordinates
-//             w, h - width and height of hitbox
-Enemy.prototype.drawHitBox = function (x, y, w, h) {
+// Parameters: xPos, yPos - x and y coordinates of enemy
+Enemy.prototype.drawHitBox = function (xPos, yPos) {
     ctx.strokeStyle = "red";
-    ctx.strokeRect(x, y, w, h);
+    ctx.strokeRect(xPos + this.hitBox.xOffset, yPos + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
 };
 
 // Player Class
@@ -199,6 +198,8 @@ Player.prototype.boardPosition = {
 Player.prototype.render = function () {
     if (this.livesRemaining >= 0) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        // Hit box for determining collisions
+        // this.drawHitBox();
     }
 };
 
@@ -259,9 +260,9 @@ Player.prototype.enemyCollisions = function () {
 // Parameters: x, y - x and y coordinates
 //             w, h - width and height of hitbox
 //             color - color of hitbox
-Player.prototype.drawHitBox = function (x, y, w, h, color) {
-    ctx.strokeStyle = color;
-    ctx.strokeRect(x, y, w, h);
+Player.prototype.drawHitBox = function () {
+    ctx.strokeStyle = "red";
+    ctx.strokeRect(this.x + this.hitBox.xOffset, this.y + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
 };
 
 var Scoreboard = function () {
