@@ -16,7 +16,7 @@
     <button id="bgMusic">BG Music</button>
     <script>
         var musicBtn = document.getElementById('bgMusic');
-        musicBtn.addEventListener('click', function(e) {
+        musicBtn.addEventListener('click', function (e) {
             if (soundBG.playing()) {
                 musicBtn.classList.add('bg-sound-off');
                 soundBG.stop();
@@ -26,6 +26,5 @@
             }
         });
     </script>
-
 </body>
 </html>
