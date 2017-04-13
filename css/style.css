@@ -6,3 +6,14 @@ canvas {
     display: block;
     margin: 0 auto;
 }
+
+#bgMusic {
+    background: #9f9;
+    display: block;
+    margin: 0 auto;
+    outline: none;
+}
+
+#bgMusic.bg-sound-off {
+    background: #f99;
+}

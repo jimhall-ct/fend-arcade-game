@@ -10,7 +10,22 @@
 <body>
     <script src="js/howler.js"></script>
     <script src="js/resources.js"></script>
-    <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
+    <script src="js/app.js"></script>
+
+    <button id="bgMusic">BG Music</button>
+    <script>
+        var musicBtn = document.getElementById('bgMusic');
+        musicBtn.addEventListener('click', function(e) {
+            if (soundBG.playing()) {
+                musicBtn.classList.add('bg-sound-off');
+                soundBG.stop();
+            } else {
+                musicBtn.classList.remove('bg-sound-off');
+                soundBG.play();
+            }
+        });
+    </script>
+
 </body>
 </html>

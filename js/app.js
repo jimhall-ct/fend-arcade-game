@@ -174,6 +174,7 @@ Player.prototype.update = function (dt) {
 
 // Function for when the player reaches the top row
 Player.prototype.reachGoalPosition = function () {
+    soundEffect.play('score');
     scoreboard.score++;
     scoreboard.displayScored();
     this.reset();
@@ -210,14 +211,10 @@ Player.prototype.handleInput = function (keyPress) {
 
         if (keyPress === 'left' && this.currentCol > 0) {
             this.targetCol = this.currentCol - 1;
-
         } else if (keyPress === 'right' && this.currentCol < this.boardPosition.col.length - 1) {
             this.targetCol = this.currentCol + 1;
-
-
         } else if (keyPress === 'up' && this.currentRow > 0) {
             this.targetRow = this.currentRow - 1;
-
         } else if (keyPress === 'down' && this.currentRow < this.boardPosition.row.length - 1) {
             this.targetRow = this.currentRow + 1;
         }
@@ -246,7 +243,7 @@ Player.prototype.enemyCollisions = function () {
             this.x + this.hitBox.xOffset + this.hitBox.width + rightToLeftOffset > enemy.x + enemy.hitBox.xOffset &&
             this.y + this.hitBox.yOffset < enemy.y + enemy.hitBox.yOffset + enemy.hitBox.height &&
             this.y + this.hitBox.yOffset + this.hitBox.height > enemy.y + enemy.hitBox.yOffset) {
-
+            soundEffect.play('hit');
             this.livesRemaining--;
             this.reset();
             if (this.livesRemaining < 0) {
@@ -257,14 +254,13 @@ Player.prototype.enemyCollisions = function () {
 };
 
 // Helper function to visual check collisions
-// Parameters: x, y - x and y coordinates
-//             w, h - width and height of hitbox
-//             color - color of hitbox
 Player.prototype.drawHitBox = function () {
     ctx.strokeStyle = "red";
     ctx.strokeRect(this.x + this.hitBox.xOffset, this.y + this.hitBox.yOffset, this.hitBox.width, this.hitBox.height);
 };
 
+// Function for displaying the score, high score, and lives
+// Keeps track of high score using local storage
 var Scoreboard = function () {
     this.score = 0;
     this.scored = false;
@@ -349,23 +345,31 @@ var Scoreboard = function () {
         }
     };
 };
+
 // Game sound effects using the Howler.js audio framework
-// Use single audio sprite file using time offsets and durations
+// Use single audio sprite file for sfx using time offsets and durations
 var soundEffect = new Howl({
-    src: ['./audio/audio_sprite_test.mp3'],
+    src: ['./audio/arcade_sfx.mp3'],
     sprite: {
-        hit: [0, 422],
-        boink: [422, 567],
-        laser: [989, 854]
+        hit: [0, 589],
+        score: [589, 735]
     },
-    volume: .10
+    volume: .2
+});
+
+// Background music
+var soundBG = new Howl({
+    src: ['./audio/arcade_bg.mp3'],
+    autoplay: true,
+    loop: true,
+    volume: .025
 });
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var numEnemies = 10; // 8 is a good number of enemies
+var numEnemies = 10; // 10 is a fair number of enemies
 var allEnemies = [];
 
 for (var i = 0; i < numEnemies; i++) {
@@ -390,3 +394,4 @@ document.addEventListener('keydown', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
