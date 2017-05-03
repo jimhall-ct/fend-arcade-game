@@ -8,7 +8,7 @@ Navigate your player across the busy bug infested road without getting bitten
 
 ### Launch Game
 
-Load the index.html file in your browser
+View on GitHub Pages: [Arcade Clone](https://jimhall-ct.github.io/fend-arcade-game)
 
 ### Player Movement Controls
 
